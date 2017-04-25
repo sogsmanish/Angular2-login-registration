@@ -1,0 +1,116 @@
+
+
+<div class="col-md-6 col-md-offset-3">
+    <h2 class="text-center">Register</h2>
+
+    <form  #RegForm="ngForm" *ngIf="active"  (ngSubmit)="onSubmit()" >
+    <div class="form-group" >
+     <label >Name</label>
+<input type="text" class="form-control" id="FirstName"
+       required minlength="4" maxlength="24"
+       [(ngModel)]="user.FirstName" name="FirstName" #FirstName="ngModel" >
+  <div *ngIf="FirstName.errors && (FirstName.dirty || FirstName.touched)"
+              class="text-danger">
+            <div [hidden]="!FirstName.errors.required">
+              Required
+            </div>
+              <div [hidden]="!FirstName.errors.minlength">
+              Name must be at least 4 characters long.
+            </div>
+            <div [hidden]="!FirstName.errors.maxlength">
+              Name cannot be more than 24 characters long.
+        </div>
+  </div>
+  </div>
+ 
+    <div class="form-group" >
+          <label >Email</label>
+            <!-- Or use  pattern="^[a-zA-Z0–9_.+-]+@[a-zA-Z0–9-]+.[a-zA-Z0–9-.]+$" -->
+          <input type="email"  class="form-control"  required email [(ngModel)]="user.Email" name="Email" #Email="ngModel" />
+           
+          <div *ngIf="Email.errors && (Email.dirty || Email.touched)"
+              class="text-danger">
+            <div [hidden]="!Email.errors.required">
+              Required
+            </div> 
+             <div [hidden]="!Email.errors.email">
+              Invalid Email (Valid Ex:john@doe.com)
+            </div> 
+          </div>            
+  </div>     
+     <div class="form-group" >
+            <label for="Password">Password</label>
+            <input type="Password" class="form-control" required minlength="6" [(ngModel)]="user.Password" name="Password" #Password="ngModel" />
+            <div *ngIf="Password.errors && (Password.dirty || Password.touched)"
+              class="text-danger">
+            <div [hidden]="!Password.errors.required">
+              Required
+            </div>
+           <div [hidden]="!Password.errors.minlength">
+              Password must be at least 6 characters long.
+            </div>              
+            </div>
+        </div>
+        <div class="form-group" >
+            <label for="ConfirmPassword">Confirm Password</label>
+            <input type="Password" class="form-control" required minlength="6" [(ngModel)]="user.ConfirmPassword" name="ConfirmPassword"  #ConfirmPassword="ngModel"  />
+         <div *ngIf="ConfirmPassword.errors && (ConfirmPassword.dirty || ConfirmPassword.touched)"
+              class="text-danger">
+            <div [hidden]="!ConfirmPassword.errors.required">
+             Required
+            </div>
+            <div [hidden]="!ConfirmPassword.errors.minlength">
+              Password must be at least 6 characters long.
+            </div>  
+         </div>
+        </div>
+
+        <div class="form-group">
+            <label for="Gender">Gender</label>
+             <input type="radio" name="Gender" required [(ngModel)]="user.Gender"  value="Male" #Gender="ngModel"/>
+             <label for="Male">Male</label>
+            <input type="radio" name="Gender" required [(ngModel)]="user.Gender"  value="Female" #Gender="ngModel"/>
+            <label for="Female">Female</label>
+              <div *ngIf="Gender.errors && (Gender.dirty || Gender.touched)"
+              class="text-danger">
+            <div [hidden]="!Gender.errors.required">
+             Required
+            </div>
+              </div>
+        </div>
+
+           <div class="form-group">
+            <label for="Nationality">Nationality</label>
+            <select class="form-control" name="Nationality" required [(ngModel)]="user.Nationality" #Nationality="ngModel" >
+               <option *ngFor="let n of nationality" [value]="n">{{n}}</option>
+            </select>
+                <div *ngIf="Nationality.errors && (Nationality.dirty || Nationality.touched)"
+              class="text-danger">
+            <div [hidden]="!Nationality.errors.required">
+              Required
+            </div>
+              </div>
+        </div>
+
+         <div class="form-group" >
+            <button [disabled]="!RegForm.form.valid" (click)="addInfo()" class="btn btn-primary">Submit</button>
+            <button type="button"  class="btn btn-danger" (click)="resetForm(); RegForm.reset()">Reset </button>
+        </div>
+
+    </form>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+    <ul>
+        <li *ngFor="let m of usersList">
+          <b> Name:</b> {{ m.FirstName }} &nbsp;&nbsp;
+          <b> Email:</b>{{ m.Email }}&nbsp;&nbsp;
+          <b> Password:</b>{{m.Password}}&nbsp;&nbsp;
+          <b> Gender:</b>{{ m.Gender }} &nbsp;&nbsp;
+          <b> Nationality:</b>{{ m.Nationality }}&nbsp;&nbsp;
+        </li>
+    </ul>
+    </div>
+</div>
+
